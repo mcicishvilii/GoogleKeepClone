@@ -12,10 +12,15 @@
         tools:layout="@layout/fragment_dashboard" >
         <action
             android:id="@+id/action_dashboardFragment_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
+            app:destination="@id/addTaskFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_dashboardFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            app:destination="@id/updateFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"

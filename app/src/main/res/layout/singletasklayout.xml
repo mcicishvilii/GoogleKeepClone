@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainlayout"
+    android:layout_margin="5dp"
+    android:background="@drawable/outline"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,34 +13,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="taskiiii"
-        android:textSize="25sp"
+        android:textSize="17sp"
         app:fontFamily="sans-serif-medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="detaluri texti taksis agweraaa"
-        android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.559"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonDelete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="10dp"
-        android:text="DELETE"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="14"
+        android:text="detaluri texti taksis agweraaa"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_description" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

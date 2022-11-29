@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MishoKeepClone</string>
+    <string name="wow_you_cleared_all_the_tasks">Wow, you cleared all the tasks!</string>
 </resources>

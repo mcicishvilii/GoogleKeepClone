@@ -10,7 +10,7 @@ import com.example.mishokeepclone.data.TaskEntity
 import com.example.mishokeepclone.databinding.SingletasklayoutBinding
 import com.example.mishokeepclone.ui.screens.dashboard.DashboardFragmentDirections
 
-class TasksAdapter :
+class TasksAdapter  :
     ListAdapter<TaskEntity, TasksAdapter.TasksViewHolder>(
         NewsDiffCallBack()
     ) {
@@ -30,8 +30,6 @@ class TasksAdapter :
         holder.bindData()
     }
 
-
-
     inner class TasksViewHolder(private val binding: SingletasklayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private var model: TaskEntity? = null
@@ -42,8 +40,9 @@ class TasksAdapter :
                 tvTitle.text = model?.title
                 tvDescription.text = model?.taskDescription
             }
-            binding.buttonDelete.setOnClickListener {
+            binding.mainlayout.setOnLongClickListener {
                 itemClickListener.invoke(model!!, adapterPosition)
+                true
             }
 
             binding.mainlayout.setOnClickListener {

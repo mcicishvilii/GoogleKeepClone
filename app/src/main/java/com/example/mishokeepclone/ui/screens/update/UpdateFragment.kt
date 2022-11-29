@@ -25,8 +25,8 @@ class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding
 
     override fun viewCreated() {
 
-        binding.etUpdatetitle.hint = args.info.title
-        binding.etUpdateDescription.hint = args.info.taskDescription
+        binding.etUpdatetitle.setText(args.info.title)
+        binding.etUpdateDescription.setText(args.info.taskDescription)
     }
 
     override fun listeners() {

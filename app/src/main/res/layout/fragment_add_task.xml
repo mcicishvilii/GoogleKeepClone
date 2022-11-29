@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.screens.add_task.AddTaskFragment">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:hint="Title"
         android:textSize="25sp"
+        android:background="@android:color/transparent"
         app:fontFamily="sans-serif-medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,12 +23,15 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_description"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:layout_marginTop="15dp"
-        android:hint="Note"
+        android:gravity="top"
+        android:background="@android:color/transparent"
+        android:hint="note"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/addNutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
@@ -34,11 +39,11 @@
 
         android:id="@+id/addNutton"
         android:layout_width="60dp"
-        android:elevation="10dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_baseline_done_24"
-        android:layout_marginBottom="40dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginBottom="40dp"
+        android:elevation="10dp"
+        android:src="@drawable/ic_baseline_done_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
