@@ -37,7 +37,6 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
-
         android:id="@+id/updateNutton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
@@ -47,5 +46,15 @@
         android:text="update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_margin="70dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

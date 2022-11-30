@@ -13,5 +13,5 @@ data class TaskEntity(
     val taskid:Int,
     val title:String,
     val taskDescription:String,
-    val priority:String = ""
+    val priority:String = "Personal"
 ):Parcelable

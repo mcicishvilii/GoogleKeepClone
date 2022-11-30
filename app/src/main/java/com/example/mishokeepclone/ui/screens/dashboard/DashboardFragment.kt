@@ -17,7 +17,10 @@ import com.example.mishokeepclone.R
 import com.example.mishokeepclone.common.BaseFragment
 import com.example.mishokeepclone.data.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentDashboardBinding
+import com.example.mishokeepclone.ui.adapters.CategoriesAdapter
 import com.example.mishokeepclone.ui.adapters.TasksAdapter
+import com.example.mishokeepclone.ui.model.addCat
+import com.example.mishokeepclone.ui.model.cats
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,10 +29,12 @@ class DashboardFragment :
     BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
 
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
+    private val categoryAdapter: CategoriesAdapter by lazy { CategoriesAdapter() }
     private val vm: DashboardViewModel by viewModels()
 
     override fun viewCreated() {
         getTasks()
+        getCategories()
     }
 
     override fun listeners() {
@@ -69,6 +74,16 @@ class DashboardFragment :
         }
     }
 
+    private fun getCategories() {
+        addCat()
+        setupCatRecycler()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    categoryAdapter.submitList(cats)
+            }
+        }
+    }
+
     private fun setupRecycler() {
         binding.rvTasks.apply {
             adapter = tasksAdapter
@@ -76,6 +91,18 @@ class DashboardFragment :
                 LinearLayoutManager(
                     requireContext(),
                     LinearLayoutManager.VERTICAL,
+                    false
+                )
+        }
+    }
+
+    private fun setupCatRecycler() {
+        binding.rvCategories.apply {
+            adapter = categoryAdapter
+            layoutManager =
+                LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
                     false
                 )
         }

@@ -1,8 +1,13 @@
 package com.example.mishokeepclone.ui.screens.add_task
 
+import android.app.Dialog
+import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mishokeepclone.R
@@ -16,7 +21,7 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     AdapterView.OnItemSelectedListener {
 
 
-    private var priority:String = ""
+    private var priority: String = ""
     private val vm: AddTaskViewModel by viewModels()
 
     override fun viewCreated() {
@@ -24,6 +29,10 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     }
 
     override fun listeners() {
+        addItem()
+    }
+
+    private fun addItem() {
         binding.addNutton.setOnClickListener {
             val task = TaskEntity(
                 0,
@@ -54,5 +63,10 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val text: String = parent?.getItemAtPosition(position).toString()
         priority = text
+
     }
+
+
 }
+
+
