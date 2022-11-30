@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mishokeepclone.R
 import com.example.mishokeepclone.common.BaseFragment
+import com.example.mishokeepclone.common.Resource
 import com.example.mishokeepclone.data.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentDashboardBinding
 import com.example.mishokeepclone.ui.adapters.CategoriesAdapter
@@ -22,6 +23,7 @@ import com.example.mishokeepclone.ui.adapters.TasksAdapter
 import com.example.mishokeepclone.ui.model.addCat
 import com.example.mishokeepclone.ui.model.cats
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,15 +33,20 @@ class DashboardFragment :
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
     private val categoryAdapter: CategoriesAdapter by lazy { CategoriesAdapter() }
     private val vm: DashboardViewModel by viewModels()
+    private var filteredList = mutableListOf<TaskEntity>()
 
     override fun viewCreated() {
-        getTasks()
+//        getTasks()
         getCategories()
+        observe()
+        filter()
     }
 
     override fun listeners() {
         delete()
         toAdd()
+
+
     }
 
     private fun toAdd() {
@@ -61,18 +68,52 @@ class DashboardFragment :
         }
     }
 
-    private fun getTasks() {
-        setupRecycler()
+    private fun observe(){
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.getTasks().collect() {
-                    tasksAdapter.submitList(it)
-                    checkIfListEmpty(it)
-                    Log.d("misho", it.size.toString())
+                vm.state.collectLatest{
+                    when (it) {
+                        is Resource.Error -> {
+
+                        }
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+                            tasksAdapter.submitList(it.data)
+                            filteredList = it.data.toMutableList()
+                        }
+                    }
                 }
             }
         }
     }
+
+    private fun filter(){
+        categoryAdapter.apply {
+            setOnItemClickListener{item,_ ->
+                if (!item.cat.isNullOrEmpty()){
+                    vm.search(item.cat)
+                }else{
+                    tasksAdapter.submitList(filteredList)
+                }
+            }
+        }
+    }
+
+
+//    private fun getTasks() {
+//        setupRecycler()
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                vm.getTasks().collect() {
+//                    tasksAdapter.submitList(it)
+//                    checkIfListEmpty(it)
+//                    Log.d("misho", it.size.toString())
+//                }
+//            }
+//        }
+//    }
 
     private fun getCategories() {
         addCat()
