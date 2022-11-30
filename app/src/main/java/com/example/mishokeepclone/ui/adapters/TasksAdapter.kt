@@ -39,6 +39,7 @@ class TasksAdapter  :
             binding.apply {
                 tvTitle.text = model?.title
                 tvDescription.text = model?.taskDescription
+                binding.priority.text = model?.priority
             }
             binding.mainlayout.setOnLongClickListener {
                 itemClickListener.invoke(model!!, adapterPosition)

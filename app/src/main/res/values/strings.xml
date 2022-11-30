@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">MishoKeepClone</string>
     <string name="wow_you_cleared_all_the_tasks">Wow, you cleared all the tasks!</string>
+
+    <string name="spinner">Q39</string>
+    <string-array name="priority">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>
