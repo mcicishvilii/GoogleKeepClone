@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,15 +22,8 @@ class DashboardViewModel @Inject constructor(
     private val tasksRepo: TasksRepositoryImplementation,
 ) : ViewModel() {
 
-//    suspend fun getTasks(): Flow<List<TaskEntity>> {
-//        return tasksRepo.getTasks()
-//    }
-
-
-    val readData = tasksRepo.getTasks().asLiveData()
-
-    fun searchDatabase(searchQuery: String): LiveData<List<TaskEntity>> {
-        return tasksRepo.search(searchQuery).asLiveData()
+    suspend fun getTasks(): Flow<List<TaskEntity>> {
+        return tasksRepo.getTasks()
     }
 
     fun delete(task: TaskEntity) {
@@ -37,6 +31,5 @@ class DashboardViewModel @Inject constructor(
             tasksRepo.deleteTask(task)
         }
     }
-
 
 }

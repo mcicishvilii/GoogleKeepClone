@@ -15,5 +15,4 @@ interface TasksRepository {
 
     suspend fun updateTask(task:TaskEntity)
 
-    fun search(query:String):Flow<List<TaskEntity>>
 }

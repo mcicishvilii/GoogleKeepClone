@@ -1,21 +1,9 @@
 package com.example.mishokeepclone.ui.model
 
-val cats = mutableListOf<CategoryModel>()
+val cats = mutableListOf(CategoryModel("All"),CategoryModel("Personal"),CategoryModel("Work"),)
 
 data class CategoryModel(
     val cat: String,
 )
 
-fun addCat() {
-    cats.add(CategoryModel(
-        "All"
-    ))
-    cats.add(CategoryModel(
-        "Personal"
-    ))
-    cats.add(CategoryModel(
-        "Work"
-    ))
-
-}
 

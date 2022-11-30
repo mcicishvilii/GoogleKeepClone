@@ -29,7 +29,4 @@ class TasksRepositoryImplementation @Inject constructor(
         return tasksDao.updateTask(task)
     }
 
-    override fun search(query: String): Flow<List<TaskEntity>> {
-        return tasksDao.searchDatabase(query)
-    }
 }
