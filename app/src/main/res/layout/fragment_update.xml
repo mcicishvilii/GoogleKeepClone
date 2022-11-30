@@ -33,7 +33,8 @@
         app:layout_constraintBottom_toTopOf="@+id/updateNutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_Updatetitle" />
+        app:layout_constraintTop_toBottomOf="@+id/et_Updatetitle"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
 

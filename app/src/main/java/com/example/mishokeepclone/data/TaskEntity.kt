@@ -12,5 +12,6 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     val taskid:Int,
     val title:String,
-    val taskDescription:String
+    val taskDescription:String,
+    val priority:String
 ):Parcelable
