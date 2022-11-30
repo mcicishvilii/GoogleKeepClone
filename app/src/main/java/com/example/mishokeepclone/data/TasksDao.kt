@@ -21,6 +21,9 @@ interface TasksDao {
     @Query("DELETE FROM Tasks")
     fun deleteAll()
 
+    @Query("SELECT * FROM Tasks WHERE title LIKE :searchQuery OR taskDescription LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): Flow<List<TaskEntity>>
+
 
 
 }

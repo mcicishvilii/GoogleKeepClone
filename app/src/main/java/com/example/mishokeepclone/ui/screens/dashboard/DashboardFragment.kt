@@ -3,6 +3,7 @@ package com.example.mishokeepclone.ui.screens.dashboard
 
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -36,10 +37,8 @@ class DashboardFragment :
     private var filteredList = mutableListOf<TaskEntity>()
 
     override fun viewCreated() {
-//        getTasks()
+        getTasks()
         getCategories()
-        observe()
-        filter()
     }
 
     override fun listeners() {
@@ -68,59 +67,27 @@ class DashboardFragment :
         }
     }
 
-    private fun observe(){
+
+
+    private fun getTasks() {
+        setupRecycler()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.state.collectLatest{
-                    when (it) {
-                        is Resource.Error -> {
-
-                        }
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Success -> {
-                            tasksAdapter.submitList(it.data)
-                            filteredList = it.data.toMutableList()
-                        }
-                    }
+                vm.readData.observe(viewLifecycleOwner){
+                    tasksAdapter.submitList(it)
+                    checkIfListEmpty(it)
                 }
             }
         }
     }
 
-    private fun filter(){
-        categoryAdapter.apply {
-            setOnItemClickListener{item,_ ->
-                if (!item.cat.isNullOrEmpty()){
-                    vm.search(item.cat)
-                }else{
-                    tasksAdapter.submitList(filteredList)
-                }
-            }
-        }
-    }
-
-
-//    private fun getTasks() {
-//        setupRecycler()
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                vm.getTasks().collect() {
-//                    tasksAdapter.submitList(it)
-//                    checkIfListEmpty(it)
-//                    Log.d("misho", it.size.toString())
-//                }
-//            }
-//        }
-//    }
 
     private fun getCategories() {
         addCat()
         setupCatRecycler()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    categoryAdapter.submitList(cats)
+                categoryAdapter.submitList(cats)
             }
         }
     }

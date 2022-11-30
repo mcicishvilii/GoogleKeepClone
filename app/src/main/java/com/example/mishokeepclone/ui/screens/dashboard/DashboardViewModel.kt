@@ -1,6 +1,8 @@
 package com.example.mishokeepclone.ui.screens.dashboard
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.example.mishokeepclone.common.Resource
 import com.example.mishokeepclone.data.TaskEntity
 import com.example.mishokeepclone.data.repositoryImplementation.TasksRepositoryImplementation
@@ -19,13 +21,15 @@ class DashboardViewModel @Inject constructor(
     private val tasksRepo: TasksRepositoryImplementation,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<List<TaskEntity>>>(Resource.Loading(false))
-    val state = _state.asStateFlow()
+//    suspend fun getTasks(): Flow<List<TaskEntity>> {
+//        return tasksRepo.getTasks()
+//    }
 
-    private var filteredList = listOf<TaskEntity>()
 
-    suspend fun getTasks(): Flow<List<TaskEntity>> {
-        return tasksRepo.getTasks()
+    val readData = tasksRepo.getTasks().asLiveData()
+
+    fun searchDatabase(searchQuery: String): LiveData<List<TaskEntity>> {
+        return tasksRepo.search(searchQuery).asLiveData()
     }
 
     fun delete(task: TaskEntity) {
@@ -34,11 +38,5 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    fun search(query:String) {
-        val searchedList = filteredList.filter {
-            it.priority.lowercase().contains(query.lowercase())
-        }
-        _state.value = Resource.Success(searchedList)
-    }
 
 }
