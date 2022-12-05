@@ -1,9 +1,7 @@
 package com.example.mishokeepclone.di
 
 import com.example.mishokeepclone.data.repositoryImplementation.TasksRepositoryImplementation
-import com.example.mishokeepclone.data.repositoryImplementation.YesNorepisitoryImplementation
 import com.example.mishokeepclone.domain.TasksRepository
-import com.example.mishokeepclone.domain.YesNoRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,12 +10,8 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepoModule {
-
+abstract class RepoModuleDb {
     @Binds
     @Singleton
-    abstract fun bindYesNoRepository(
-        yesNoRepoImpl: YesNorepisitoryImplementation
-    ): YesNoRepository
-
+    abstract fun provideTasksRepo(repoImpl: TasksRepositoryImplementation): TasksRepository
 }

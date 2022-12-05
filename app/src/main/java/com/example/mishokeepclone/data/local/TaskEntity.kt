@@ -1,4 +1,4 @@
-package com.example.mishokeepclone.data
+package com.example.mishokeepclone.data.local
 
 import android.os.Parcelable
 import androidx.room.Entity

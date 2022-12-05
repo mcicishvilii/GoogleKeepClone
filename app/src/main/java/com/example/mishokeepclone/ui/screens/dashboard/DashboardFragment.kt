@@ -7,8 +7,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.mishokeepclone.common.BaseFragment
-import com.example.mishokeepclone.data.TaskEntity
+import com.example.mishokeepclone.common.Resource
+import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentDashboardBinding
 import com.example.mishokeepclone.ui.adapters.TasksAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +22,6 @@ class DashboardFragment :
 
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
 
-    //    private val categoryAdapter: CategoriesAdapter by lazy { CategoriesAdapter() }
     private val vm: DashboardViewModel by viewModels()
     private var filteredList = listOf<TaskEntity>()
 
@@ -31,14 +32,15 @@ class DashboardFragment :
 
     override fun listeners() {
         delete()
-        toAdd()
+//        toAdd()
+        getYesNoAnswer()
     }
 
-    private fun toAdd() {
-        binding.button.setOnClickListener {
-            findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToAddTaskFragment())
-        }
-    }
+//    private fun toAdd() {
+//        binding.button.setOnClickListener {
+//            findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToAddTaskFragment())
+//        }
+//    }
 
     private fun checkIfListEmpty(list: List<TaskEntity>) {
         if (list.isNotEmpty()) binding.tvTasksPresent.visibility = View.GONE
@@ -53,7 +55,6 @@ class DashboardFragment :
         }
     }
 
-
     private fun getTasks() {
         setupRecycler()
         viewLifecycleOwner.lifecycleScope.launch {
@@ -64,8 +65,30 @@ class DashboardFragment :
                 }
             }
         }
-    }
+    } // room-idan
 
+    private fun getYesNoAnswer() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.getYesNo().collect() { answer ->
+                    when (answer) {
+                        is Resource.Error -> {
+
+                        }
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+                            binding.tvYesNo.text = answer.data.answer
+                            Glide.with(binding.ivYesNo)
+                                .load(answer.data?.image)
+                                .into(binding.ivYesNo)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private fun setupRecycler() {
         binding.rvTasks.apply {
@@ -78,6 +101,8 @@ class DashboardFragment :
                 )
         }
     }
+
+
 }
 
 

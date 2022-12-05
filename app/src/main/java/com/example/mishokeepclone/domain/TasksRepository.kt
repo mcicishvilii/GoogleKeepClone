@@ -1,6 +1,6 @@
 package com.example.mishokeepclone.domain
 
-import com.example.mishokeepclone.data.TaskEntity
+import com.example.mishokeepclone.data.local.TaskEntity
 import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
@@ -13,6 +13,6 @@ interface TasksRepository {
 
     suspend fun deleteAll()
 
-    suspend fun updateTask(task:TaskEntity)
+    suspend fun updateTask(task: TaskEntity)
 
 }

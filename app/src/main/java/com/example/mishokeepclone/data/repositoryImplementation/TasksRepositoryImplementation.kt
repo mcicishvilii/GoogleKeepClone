@@ -1,14 +1,15 @@
 package com.example.mishokeepclone.data.repositoryImplementation
 
-import com.example.mishokeepclone.data.TaskEntity
-import com.example.mishokeepclone.data.TasksDao
+import com.example.mishokeepclone.data.local.TaskEntity
+import com.example.mishokeepclone.data.local.TasksDao
 import com.example.mishokeepclone.domain.TasksRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TasksRepositoryImplementation @Inject constructor(
     private val tasksDao: TasksDao
-): TasksRepository {
+) : TasksRepository {
+
     override fun getTasks(): Flow<List<TaskEntity>> {
         return tasksDao.getAll()
     }

@@ -2,8 +2,8 @@ package com.example.mishokeepclone.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.mishokeepclone.data.DataBase
-import com.example.mishokeepclone.data.TasksDao
+import com.example.mishokeepclone.data.local.DataBase
+import com.example.mishokeepclone.data.local.TasksDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

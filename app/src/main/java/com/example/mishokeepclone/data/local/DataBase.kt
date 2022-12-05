@@ -1,4 +1,4 @@
-package com.example.mishokeepclone.data
+package com.example.mishokeepclone.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

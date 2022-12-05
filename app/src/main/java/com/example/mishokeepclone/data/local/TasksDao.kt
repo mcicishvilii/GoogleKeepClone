@@ -1,7 +1,6 @@
-package com.example.mishokeepclone.data
+package com.example.mishokeepclone.data.local
 
 import androidx.room.*
-import com.example.mishokeepclone.data.TaskEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,7 +15,7 @@ interface TasksDao {
     fun delete(user: TaskEntity)
 
     @Update
-    fun updateTask(task:TaskEntity)
+    fun updateTask(task: TaskEntity)
 
     @Query("DELETE FROM Tasks")
     fun deleteAll()

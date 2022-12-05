@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mishokeepclone.data.TaskEntity
+import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.SingletasklayoutBinding
 import com.example.mishokeepclone.ui.screens.dashboard.DashboardFragmentDirections
 

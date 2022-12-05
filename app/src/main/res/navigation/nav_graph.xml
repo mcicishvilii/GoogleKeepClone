@@ -41,6 +41,6 @@
             app:destination="@id/dashboardFragment" />
         <argument
             android:name="info"
-            app:argType="com.example.mishokeepclone.data.TaskEntity" />
+            app:argType="com.example.mishokeepclone.data.local.TaskEntity" />
     </fragment>
 </navigation>
