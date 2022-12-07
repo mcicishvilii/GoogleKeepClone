@@ -28,14 +28,52 @@
         android:layout_height="0dp"
         android:layout_margin="20dp"
         android:layout_marginTop="15dp"
-        android:gravity="top"
         android:background="@android:color/transparent"
+        android:gravity="top"
         android:hint="note"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/addNutton"
+        app:layout_constraintBottom_toTopOf="@+id/et_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_title" />
+
+
+    <LinearLayout
+        android:id="@+id/et_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/addNutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_description">
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-30dp"
+            android:layout_marginRight="-30dp"
+            android:layout_weight="1"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:scaleX="0.7"
+            android:scaleY="0.7" />
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-30dp"
+            android:layout_marginRight="-30dp"
+            android:layout_weight="1"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
 
@@ -53,8 +91,8 @@
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
-        android:layout_margin="70dp"
         android:layout_height="wrap_content"
+        android:layout_margin="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -23,7 +23,6 @@ class DashboardFragment :
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
 
     private val vm: DashboardViewModel by viewModels()
-    private var filteredList = listOf<TaskEntity>()
 
 
     override fun viewCreated() {
@@ -32,15 +31,15 @@ class DashboardFragment :
 
     override fun listeners() {
         delete()
-//        toAdd()
+        toAdd()
         getYesNoAnswer()
     }
 
-//    private fun toAdd() {
-//        binding.button.setOnClickListener {
-//            findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToAddTaskFragment())
-//        }
-//    }
+    private fun toAdd() {
+        binding.button.setOnClickListener {
+            findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToAddTaskFragment())
+        }
+    }
 
     private fun checkIfListEmpty(list: List<TaskEntity>) {
         if (list.isNotEmpty()) binding.tvTasksPresent.visibility = View.GONE
@@ -65,7 +64,7 @@ class DashboardFragment :
                 }
             }
         }
-    } // room-idan
+    }
 
     private fun getYesNoAnswer() {
         viewLifecycleOwner.lifecycleScope.launch {
