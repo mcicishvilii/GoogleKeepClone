@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 
 @Parcelize
@@ -13,5 +14,6 @@ data class TaskEntity(
     val taskid:Int,
     val title:String,
     val taskDescription:String,
-    val priority:String = "Personal"
+    val priority:String = "Personal",
+    val time: String = ""
 ):Parcelable

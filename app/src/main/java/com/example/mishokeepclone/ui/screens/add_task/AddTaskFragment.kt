@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -36,9 +37,11 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
+
     override fun listeners() {
         addItem()
     }
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun scheduleNotification()
     {
@@ -59,25 +62,11 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
-            getTime(), // es undna icvlebodes dinamiurad
+            getTime(),
             pendingIntent
         )
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getTime(): Long
-    {
-        val minute = binding.timePicker.minute
-        val hour = binding.timePicker.hour
-        val day = binding.datePicker.dayOfMonth
-        val month = binding.datePicker.month
-        val year = binding.datePicker.year
-
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day, hour, minute)
-        return calendar.timeInMillis
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun addItem() {
@@ -86,10 +75,12 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
                 0,
                 binding.etTitle.text.toString(),
                 binding.etDescription.text.toString(),
-                priority
+                priority,
+                getTimeForList()
             )
 
             vm.insertTask(task)
+            Log.d("mcicishv",getTimeForList().toString())
             scheduleNotification()
             findNavController().navigate(R.id.action_addTaskFragment_to_dashboardFragment)
 
@@ -115,6 +106,34 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
         val text: String = parent?.getItemAtPosition(position).toString()
         priority = text
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getTime(): Long
+    {
+        val minute = binding.timePicker.minute
+        val hour = binding.timePicker.hour
+        val day = binding.datePicker.dayOfMonth
+        val month = binding.datePicker.month
+        val year = binding.datePicker.year
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day, hour, minute)
+        return calendar.timeInMillis
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getTimeForList(): String
+    {
+        val minute = binding.timePicker.minute
+        val hour = binding.timePicker.hour
+        val day = binding.datePicker.dayOfMonth
+        val month = binding.datePicker.month
+        val year = binding.datePicker.year
+
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day, hour, minute)
+        return calendar.time.toString()
     }
 
 }

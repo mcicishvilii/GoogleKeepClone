@@ -40,6 +40,7 @@ class TasksAdapter  :
                 tvTitle.text = model?.title
                 tvDescription.text = model?.taskDescription
                 binding.priority.text = model?.priority
+                binding.tvTime.text = "will be notified at ${model?.time.toString()}"
             }
             binding.mainlayout.setOnLongClickListener {
                 itemClickListener.invoke(model!!, adapterPosition)
