@@ -26,9 +26,7 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBinding::inflate), AdapterView.OnItemSelectedListener {
-
-
+class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBinding::inflate),AdapterView.OnItemSelectedListener {
     private var priority: String = ""
     private val vm: AddTaskViewModel by viewModels()
 
