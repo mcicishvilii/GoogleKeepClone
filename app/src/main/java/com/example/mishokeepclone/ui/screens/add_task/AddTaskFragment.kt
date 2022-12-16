@@ -88,15 +88,20 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     }
 
     private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.priority,
-            android.R.layout.simple_spinner_item
-        )
+//        val adapter = ArrayAdapter.createFromResource(
+//            requireContext(),
+//            R.array.priority,
+//            android.R.layout.simple_spinner_item
+//        )
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
-        binding.spinner.onItemSelectedListener = this
+
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        binding.spinner.adapter = adapter
+//        binding.spinner.onItemSelectedListener = this
+
+        val priority = resources.getStringArray(R.array.priority)
+        val adapter1 = ArrayAdapter(requireContext(),R.layout.custom_spinner_layout,priority)
+        binding.newspinner.setAdapter(adapter1)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
