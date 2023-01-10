@@ -32,7 +32,6 @@ class DashboardFragment :
     override fun listeners() {
         delete()
         toAdd()
-        getYesNoAnswer()
     }
 
     private fun toAdd() {
@@ -66,28 +65,7 @@ class DashboardFragment :
         }
     }
 
-    private fun getYesNoAnswer() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.getYesNo().collect() { answer ->
-                    when (answer) {
-                        is Resource.Error -> {
 
-                        }
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Success -> {
-                            binding.tvYesNo.text = answer.data.answer
-                            Glide.with(binding.ivYesNo)
-                                .load(answer.data?.image)
-                                .into(binding.ivYesNo)
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private fun setupRecycler() {
         binding.rvTasks.apply {

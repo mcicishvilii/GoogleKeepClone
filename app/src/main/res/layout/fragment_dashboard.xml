@@ -36,26 +36,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_yesNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="yes an no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tasksPresent" />
-
-    <ImageView
-        android:id="@+id/iv_yesNo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/tv_yesNo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tasksPresent"
-        />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

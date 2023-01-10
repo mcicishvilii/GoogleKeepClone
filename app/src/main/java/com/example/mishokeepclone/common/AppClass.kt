@@ -22,7 +22,7 @@ class AppClass: Application() {
                 channelID,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            channel.description = "mogityna patroni"
+            channel.description = "mychann"
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
