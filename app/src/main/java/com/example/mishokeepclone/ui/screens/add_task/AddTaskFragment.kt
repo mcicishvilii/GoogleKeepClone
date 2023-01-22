@@ -52,7 +52,7 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
 
     private fun dialog(task: TaskEntity){
 
-        val time = "${binding.tvTime.text}" + "000"
+        val time = "${binding.tvTime.text}000"
             AlertDialog.Builder(requireContext())
             .setTitle("Connfirm Date")
             .setMessage("please confirm the date $time")
@@ -93,6 +93,8 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
             exactTime,
             pendingIntent
         )
+
+        Log.d("mishocicka","${alarmManager.nextAlarmClock}")
 
     }
 

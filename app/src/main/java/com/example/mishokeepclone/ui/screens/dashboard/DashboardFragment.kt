@@ -1,18 +1,23 @@
 package com.example.mishokeepclone.ui.screens.dashboard
 
+import android.app.ProgressDialog.show
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mishokeepclone.common.BaseFragment
 import com.example.mishokeepclone.common.Resource
 import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentDashboardBinding
 import com.example.mishokeepclone.ui.adapters.TasksAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,10 +51,32 @@ class DashboardFragment :
     }
 
     private fun delete() {
-        tasksAdapter.apply {
-            setOnItemClickListener { taskEntity, _ ->
-                vm.delete(taskEntity)
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            UP or DOWN,
+            LEFT or RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return true
             }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val task = tasksAdapter.currentList[position]
+                vm.delete(task)
+                Snackbar.make(view!!,"Deleted task",Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo"){
+                        vm.insertTask(task)
+                    }
+                    show()
+                }
+            }
+        }
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(binding.rvTasks)
         }
     }
 

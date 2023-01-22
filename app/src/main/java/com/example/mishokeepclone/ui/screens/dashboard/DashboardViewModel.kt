@@ -25,4 +25,10 @@ class DashboardViewModel @Inject constructor(
             tasksRepo.deleteTask(task)
         }
     }
+
+    fun insertTask(task: TaskEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            tasksRepo.insertTask(task)
+        }
+    }
 }
