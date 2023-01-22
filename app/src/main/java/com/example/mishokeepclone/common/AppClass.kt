@@ -18,8 +18,8 @@ class AppClass: Application() {
     private fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val channel = NotificationChannel(
-                "axali noti chaneli",
                 channelID,
+                "channelID",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description = "mychann"

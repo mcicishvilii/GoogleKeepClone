@@ -19,5 +19,4 @@ class AddTaskViewModel @Inject constructor(
             tasksRepo.insertTask(task)
         }
     }
-
 }

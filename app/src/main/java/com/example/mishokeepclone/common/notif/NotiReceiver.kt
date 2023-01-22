@@ -9,8 +9,8 @@ import androidx.core.app.NotificationCompat
 import com.example.mishokeepclone.R
 
 
-const val notificationID = 1
-const val channelID = "channel1"
+const val notificationID = 2
+const val channelID = "channel4"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
 
@@ -23,6 +23,6 @@ class NotiReceiver : BroadcastReceiver() {
             .build()
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(1, notification)
+        notificationManager.notify(2, notification)
     }
 }
