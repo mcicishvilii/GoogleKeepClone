@@ -1,5 +1,6 @@
 package com.example.mishokeepclone.ui.screens.add_task
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -50,12 +51,14 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     private fun dialog(task: TaskEntity){
 
         val time = "${binding.tvTime.text}000"
+        val formatedTime = TimeFormaterIMPL().formatMillisToDateAndSplit(time.toLong())
             AlertDialog.Builder(requireContext())
             .setTitle("Connfirm Date")
-            .setMessage("please confirm the date $time")
+            .setMessage("please confirm the date $formatedTime")
             .setPositiveButton("Confirm"){dialog,id ->
                 executeAdd(task)
                 scheduleNotification(time.toLong())
@@ -105,13 +108,12 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
 
     private fun addItem() {
         binding.addNutton.setOnClickListener {
-            val timeToString = time.toString()
+
             val task = TaskEntity(
                 0,
                 binding.etTitle.text.toString(),
                 binding.etDescription.text.toString(),
                 priority,
-                timeToString
             )
             dialog(task)
         }
@@ -143,6 +145,7 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
                     val l = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
                     unix = l.atStartOfDay(ZoneId.systemDefault()).toInstant().epochSecond
 
+                    binding.btnDate.text = date
                     binding.tvTime.text = unix.toString()
                 }, mYear, mMonth, mDay
             )

@@ -1,5 +1,6 @@
 package com.example.mishokeepclone.ui.screens.update
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,15 +12,19 @@ import com.example.mishokeepclone.common.BaseFragment
 import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentUpdateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding::inflate),AdapterView.OnItemSelectedListener {
+
+    private lateinit var array:List<String>
 
     private var priority: String = ""
     private val vm: UpdateViewModel by viewModels()
     val args:UpdateFragmentArgs by navArgs()
 
     override fun viewCreated() {
+        array = mutableListOf("misho")
         setupSpinner()
         binding.etUpdatetitle.setText(args.info.title)
         binding.etUpdateDescription.setText(args.info.taskDescription)
@@ -42,6 +47,7 @@ class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding
     }
 
     private fun setupSpinner() {
+
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.priority,
@@ -54,7 +60,7 @@ class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-
+        binding.spinner.setSelection(Arrays.asList(array).lastIndex)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
