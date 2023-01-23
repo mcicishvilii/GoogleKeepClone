@@ -15,19 +15,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding::inflate),AdapterView.OnItemSelectedListener {
+class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding::inflate) {
 
-    private lateinit var array:List<String>
-
-    private var priority: String = ""
     private val vm: UpdateViewModel by viewModels()
     val args:UpdateFragmentArgs by navArgs()
 
     override fun viewCreated() {
-        array = mutableListOf("misho")
-        setupSpinner()
+
         binding.etUpdatetitle.setText(args.info.title)
         binding.etUpdateDescription.setText(args.info.taskDescription)
+        binding.etCoworkerSpinner.setText(args.info.priority)
+        setupSpinner()
     }
 
     override fun listeners() {
@@ -37,6 +35,9 @@ class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding
     }
 
     private fun updateTask(){
+
+        val priority = binding.etCoworkerSpinner.text.toString()
+
         val updatedTask = TaskEntity(
             args.info.taskid,
             binding.etUpdatetitle.text.toString(),
@@ -47,25 +48,8 @@ class UpdateFragment : BaseFragment<FragmentUpdateBinding>(FragmentUpdateBinding
     }
 
     private fun setupSpinner() {
-
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.priority,
-            android.R.layout.simple_spinner_item
-        )
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = adapter
-        binding.spinner.onItemSelectedListener = this
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        binding.spinner.setSelection(Arrays.asList(array).lastIndex)
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val text: String = parent?.getItemAtPosition(position).toString()
-        priority = text
-
+        val priority = resources.getStringArray(R.array.priority)
+        val adapter1 = ArrayAdapter(requireContext(), R.layout.custom_spinner_layout, priority)
+        binding.etCoworkerSpinner.setAdapter(adapter1)
     }
 }

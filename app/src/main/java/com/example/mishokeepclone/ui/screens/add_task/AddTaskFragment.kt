@@ -29,11 +29,9 @@ import java.util.*
 
 @AndroidEntryPoint
 @RequiresApi(Build.VERSION_CODES.O)
-class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBinding::inflate),
-    AdapterView.OnItemSelectedListener {
+class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBinding::inflate) {
 
     private var time:Long = 0
-    private var priority: String = ""
     private val vm: AddTaskViewModel by viewModels()
 
     val c = Calendar.getInstance();
@@ -68,7 +66,6 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
 
             }
             .show()
-
     }
 
 
@@ -109,11 +106,13 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     private fun addItem() {
         binding.addNutton.setOnClickListener {
 
+            val coworker = binding.newspinner.text.toString()
+
             val task = TaskEntity(
                 0,
                 binding.etTitle.text.toString(),
                 binding.etDescription.text.toString(),
-                priority,
+                coworker,
             )
             dialog(task)
         }
@@ -155,49 +154,10 @@ class AddTaskFragment : BaseFragment<FragmentAddTaskBinding>(FragmentAddTaskBind
     }
 
     private fun setupSpinner() {
-
         val priority = resources.getStringArray(R.array.priority)
         val adapter1 = ArrayAdapter(requireContext(), R.layout.custom_spinner_layout, priority)
         binding.newspinner.setAdapter(adapter1)
     }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val text: String = parent?.getItemAtPosition(position).toString()
-        priority = text
-    }
-
-//    @RequiresApi(Build.VERSION_CODES.M)
-//    private fun getTime(): Long
-//    {
-//        val minute = binding.timePicker.minute
-//        val hour = binding.timePicker.hour
-//        val day = binding.datePicker.dayOfMonth
-//        val month = binding.datePicker.month
-//        val year = binding.datePicker.year
-//
-//        val calendar = Calendar.getInstance()
-//        calendar.set(year, month, day, hour, minute)
-//        return calendar.timeInMillis
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.M)
-//    private fun getTimeForList(): String
-//    {
-//        val minute = binding.timePicker.minute
-//        val hour = binding.timePicker.hour
-//        val day = binding.datePicker.dayOfMonth
-//        val month = binding.datePicker.month
-//        val year = binding.datePicker.year
-//
-//        val calendar = Calendar.getInstance()
-//        calendar.set(year, month, day, hour, minute)
-//        return calendar.time.toString()
-//    }
-
-
 }
 
 
