@@ -2,6 +2,8 @@ package com.example.mishokeepclone.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.SingletasklayoutBinding
 import com.example.mishokeepclone.ui.screens.dashboard.DashboardFragmentDirections
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TasksAdapter  :
-    ListAdapter<TaskEntity, TasksAdapter.TasksViewHolder>(
-        NewsDiffCallBack()
-    ) {
+    ListAdapter<TaskEntity, TasksAdapter.TasksViewHolder>(NewsDiffCallBack()),Filterable {
 
     private lateinit var itemClickListener: (TaskEntity, Int) -> Unit
 
@@ -57,7 +59,38 @@ class TasksAdapter  :
         itemClickListener = clickListener
     }
 
+    override fun getFilter(): Filter {
+        return customFilter
+    }
+
+    private val customFilter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredList = mutableListOf<TaskEntity>()
+            if (constraint == null || constraint.isEmpty()) {
+                filteredList.addAll(currentList)
+            } else {
+                for (item in currentList) {
+                    if (item.priority.startsWith(constraint.toString().toLowerCase())) {
+                        filteredList.add(item)
+                    }
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
+            submitList(filterResults?.values as MutableList<TaskEntity>)
+        }
+
+    }
+
+
 }
+
+
+
 
 class NewsDiffCallBack :
     DiffUtil.ItemCallback<TaskEntity>() {
@@ -74,6 +107,4 @@ class NewsDiffCallBack :
     ): Boolean {
         return oldItem == newItem
     }
-
-
 }

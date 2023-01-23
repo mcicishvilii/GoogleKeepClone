@@ -1,12 +1,13 @@
 package com.example.mishokeepclone.data.local
 
 import androidx.room.*
+import com.example.mishokeepclone.common.Resource
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TasksDao {
     @Query("SELECT * FROM Tasks")
-    fun getAll(): Flow<List<TaskEntity>>
+    fun getAll(): List<TaskEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(users: TaskEntity)
