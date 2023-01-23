@@ -27,6 +27,7 @@ class DashboardViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     suspend fun getTasks() {
+
         viewModelScope.launch(Dispatchers.IO) {
             tasksRepo.getTasks().collectLatest {
                 when(it){
