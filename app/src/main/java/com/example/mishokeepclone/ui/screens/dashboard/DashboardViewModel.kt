@@ -23,31 +23,15 @@ class DashboardViewModel @Inject constructor(
 
     private var filteredList = listOf<TaskEntity>()
 
-    private val _state = MutableStateFlow<Resource<List<TaskEntity>>>(Resource.Loading(false))
-    val state = _state.asStateFlow()
+//    private val _state = MutableStateFlow<List<TaskEntity>>(mutableListOf())
+//    val state = _state.asStateFlow()
 
-    suspend fun getTasks() {
-
-        viewModelScope.launch(Dispatchers.IO) {
-            tasksRepo.getTasks().collectLatest {
-                when(it){
-                    is Resource.Success -> {
-                        filteredList = it.data
-                        _state.value = Resource.Success(it.data)
-                    }
-                    is Resource.Error -> {
-                        _state.value = Resource.Error("woops!")
-                    }
-                    is Resource.Loading -> {
-                        _state.value = Resource.Loading(true)
-                    }
-                }
-            }
-        }
+    suspend fun getTasks(query:String): Flow<List<TaskEntity>> {
+        return tasksRepo.getTasks(query)
     }
 
     fun delete(task: TaskEntity) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch (Dispatchers.IO) {
             tasksRepo.deleteTask(task)
         }
     }
@@ -58,12 +42,12 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    fun search(query:String) {
-        val searchedList = filteredList.filter {
-            it.priority.lowercase().contains(query.lowercase())
-        }
-        _state.value = Resource.Success(searchedList)
-    }
+//    fun search(query:String) {
+//        val searchedList = filteredList.filter {
+//            it.priority.lowercase().contains(query.lowercase())
+//        }
+//        _state.value = searchedList
+//    }
 
 
 }

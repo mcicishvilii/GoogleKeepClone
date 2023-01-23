@@ -3,10 +3,11 @@ package com.example.mishokeepclone.domain
 import com.example.mishokeepclone.common.Resource
 import com.example.mishokeepclone.data.local.TaskEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface TasksRepository {
 
-    suspend fun getTasks(): Flow<Resource<List<TaskEntity>>>
+    fun getTasks(query:String): Flow<List<TaskEntity>>
 
     suspend fun insertTask(task: TaskEntity)
 

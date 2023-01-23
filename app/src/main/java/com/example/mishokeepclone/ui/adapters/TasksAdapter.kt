@@ -36,6 +36,7 @@ class TasksAdapter  :
         RecyclerView.ViewHolder(binding.root) {
         private var model: TaskEntity? = null
 
+
         fun bindData() {
             model = getItem(adapterPosition)
             binding.apply {
@@ -52,6 +53,7 @@ class TasksAdapter  :
                 val action = DashboardFragmentDirections.actionDashboardFragmentToUpdateFragment(model!!)
                 binding.mainlayout.findNavController().navigate(action)
             }
+
         }
     }
 

@@ -10,20 +10,11 @@ import java.io.IOException
 import javax.inject.Inject
 
 class TasksRepositoryImplementation @Inject constructor(
-    private val tasksDao: TasksDao
+    private val tasksDao: TasksDao,
 ) : TasksRepository {
 
-    override suspend fun getTasks(): Flow<Resource<List<TaskEntity>>> = flow {
-        try {
-            emit(Resource.Loading(true))
-            emit(Resource.Success(tasksDao.getAll()))
-        }
-        catch (e:IOException){
-            emit(Resource.Error(e.message.toString()))
-        }
-
-
-
+    override fun getTasks(query:String): Flow<List<TaskEntity>> {
+        return tasksDao.getAll(query)
     }
 
     override suspend fun insertTask(task: TaskEntity) {
