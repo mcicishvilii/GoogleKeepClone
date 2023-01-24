@@ -1,7 +1,10 @@
 package com.example.mishokeepclone.ui.screens.dashboard
 
+import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -27,10 +30,47 @@ class DashboardFragment :
 
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
     private val vm: DashboardViewModel by viewModels()
-
+    private var filteredList = listOf<TaskEntity>()
+    private var selection = ""
     override fun viewCreated() {
 
-        getTasks()
+
+        getAll()
+
+        binding.personal.setOnClickListener {
+            getSeached("Personal")
+        }
+        binding.work.setOnClickListener {
+            getSeached("Work")
+        }
+
+        binding.clearAll.setOnClickListener {
+            getAll()
+        }
+
+
+
+
+
+//        binding.search.setOnQueryTextListener(object : OnQueryTextListener,
+//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(p0: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(msg: String): Boolean {
+//                // inside on query text change method we are
+//                // calling a method to filter our recycler view.
+//                if(msg.isNullOrEmpty()){
+//                    getAll()
+//                }
+//                else{
+//                    getSeached(msg)
+//                }
+//                return false
+//            }
+//        })
+
     }
 
     override fun listeners() {
@@ -92,11 +132,23 @@ class DashboardFragment :
 //    }
 
 
-    private fun getTasks() {
+    private fun getSeached(query:String) {
         setupRecycler()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                vm.getTasks("Personal").collect() {
+                vm.getSearched(query).collect() {
+                    tasksAdapter.submitList(it)
+                    checkIfListEmpty(it)
+                }
+            }
+        }
+    }
+
+    private fun getAll() {
+        setupRecycler()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.getAll().collect() {
                     tasksAdapter.submitList(it)
                     checkIfListEmpty(it)
                 }
@@ -115,6 +167,8 @@ class DashboardFragment :
                 )
         }
     }
+
+
 
 }
 

@@ -26,8 +26,12 @@ class DashboardViewModel @Inject constructor(
 //    private val _state = MutableStateFlow<List<TaskEntity>>(mutableListOf())
 //    val state = _state.asStateFlow()
 
-    suspend fun getTasks(query:String): Flow<List<TaskEntity>> {
-        return tasksRepo.getTasks(query)
+    suspend fun getSearched(query:String): Flow<List<TaskEntity>> {
+        return tasksRepo.getSearched(query)
+    }
+
+    suspend fun getAll(): Flow<List<TaskEntity>> {
+        return tasksRepo.getAll()
     }
 
     fun delete(task: TaskEntity) {

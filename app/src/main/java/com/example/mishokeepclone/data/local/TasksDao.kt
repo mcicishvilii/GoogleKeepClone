@@ -7,7 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TasksDao {
     @Query("SELECT * FROM Tasks WHERE priority = :query")
-    fun getAll(query:String):Flow<List<TaskEntity>>
+    fun getSearched(query:String):Flow<List<TaskEntity>>
+
+    @Query("SELECT * FROM Tasks")
+    fun getAll():Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(users: TaskEntity)

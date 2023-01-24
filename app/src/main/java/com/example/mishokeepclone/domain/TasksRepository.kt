@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.flow
 
 interface TasksRepository {
 
-    fun getTasks(query:String): Flow<List<TaskEntity>>
+    fun getSearched(query:String): Flow<List<TaskEntity>>
+
+    fun getAll(): Flow<List<TaskEntity>>
 
     suspend fun insertTask(task: TaskEntity)
 

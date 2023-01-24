@@ -13,8 +13,12 @@ class TasksRepositoryImplementation @Inject constructor(
     private val tasksDao: TasksDao,
 ) : TasksRepository {
 
-    override fun getTasks(query:String): Flow<List<TaskEntity>> {
-        return tasksDao.getAll(query)
+    override fun getSearched(query:String): Flow<List<TaskEntity>> {
+        return tasksDao.getSearched(query)
+    }
+
+    override fun getAll(): Flow<List<TaskEntity>> {
+        return tasksDao.getAll()
     }
 
     override suspend fun insertTask(task: TaskEntity) {

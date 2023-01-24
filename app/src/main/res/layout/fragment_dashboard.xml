@@ -6,37 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.screens.dashboard.DashboardFragment">
 
-    <TextView
-        android:id="@+id/misho"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="misho"
-
+    <Button
+        android:id="@+id/personal"
+        style="@style/buttons"
+        android:text="Personal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/clearAll"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
-    <TextView
-        android:id="@+id/cico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="cico"
-
+    <Button
+        android:id="@+id/work"
+        style="@style/buttons"
+        android:text="Work"
+        app:layout_constraintEnd_toStartOf="@id/clearAll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textCursorDrawable="@null"
-        android:padding="10dp"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/misho"
-        app:queryBackground="@null" />
+    <Button
+        android:id="@+id/clearAll"
+        style="@style/buttons"
+        android:text="Clear"
+        app:layout_constraintEnd_toStartOf="@+id/personal"
+        app:layout_constraintStart_toEndOf="@+id/work"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"
@@ -44,9 +38,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintTop_toBottomOf="@+id/work" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button"
