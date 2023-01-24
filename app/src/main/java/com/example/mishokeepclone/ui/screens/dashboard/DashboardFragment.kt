@@ -1,5 +1,6 @@
 package com.example.mishokeepclone.ui.screens.dashboard
 
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
@@ -30,54 +31,22 @@ class DashboardFragment :
 
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
     private val vm: DashboardViewModel by viewModels()
-    private var filteredList = listOf<TaskEntity>()
-    private var selection = ""
+
+
+
     override fun viewCreated() {
 
+        binding.personal.setBackgroundColor(Color.CYAN)
+        binding.work.setBackgroundColor(Color.CYAN)
+        binding.clearAll.setBackgroundColor(Color.CYAN)
 
         getAll()
-
-        binding.personal.setOnClickListener {
-            getSeached("Personal")
-        }
-        binding.work.setOnClickListener {
-            getSeached("Work")
-        }
-
-        binding.clearAll.setOnClickListener {
-            getAll()
-        }
-
-
-
-
-
-//        binding.search.setOnQueryTextListener(object : OnQueryTextListener,
-//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(msg: String): Boolean {
-//                // inside on query text change method we are
-//                // calling a method to filter our recycler view.
-//                if(msg.isNullOrEmpty()){
-//                    getAll()
-//                }
-//                else{
-//                    getSeached(msg)
-//                }
-//                return false
-//            }
-//        })
-
     }
 
     override fun listeners() {
         delete()
         toAdd()
-//        search()
-//        search1()
+        filterByCategories()
     }
 
 
@@ -123,14 +92,6 @@ class DashboardFragment :
         }
     }
 
-//    fun delete() {
-//        tasksAdapter.apply {
-//            setOnItemClickListener { taskEntity, i ->
-//                vm.delete(taskEntity)
-//            }
-//        }
-//    }
-
 
     private fun getSeached(query:String) {
         setupRecycler()
@@ -169,6 +130,26 @@ class DashboardFragment :
     }
 
 
+    private fun filterByCategories(){
+        binding.personal.setOnClickListener {
+            getSeached("Personal")
+            binding.personal.setBackgroundColor(Color.GREEN)
+            binding.work.setBackgroundColor(Color.RED)
+            binding.clearAll.setBackgroundColor(Color.RED)
+        }
+        binding.work.setOnClickListener {
+            getSeached("Work")
+            binding.personal.setBackgroundColor(Color.RED)
+            binding.work.setBackgroundColor(Color.GREEN)
+            binding.clearAll.setBackgroundColor(Color.RED)
+        }
+        binding.clearAll.setOnClickListener {
+            getAll()
+            binding.personal.setBackgroundColor(Color.CYAN)
+            binding.work.setBackgroundColor(Color.CYAN)
+            binding.clearAll.setBackgroundColor(Color.CYAN)
+        }
+    }
 
 }
 
