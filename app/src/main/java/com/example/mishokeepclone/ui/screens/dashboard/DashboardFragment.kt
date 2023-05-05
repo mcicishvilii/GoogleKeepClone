@@ -1,5 +1,6 @@
 package com.example.mishokeepclone.ui.screens.dashboard
 
+import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.util.Log
 import android.view.View
@@ -36,6 +37,8 @@ class DashboardFragment :
     private val vm: DashboardViewModel by viewModels()
 
     override fun viewCreated() {
+
+
 
 
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
@@ -159,17 +162,40 @@ class DashboardFragment :
     private fun setupRecycler() {
         binding.rvTasks.apply {
 
+            val animator = ObjectAnimator.ofFloat(this, "alpha", 0f, 1f)
+            animator.duration = 500
+
+            // Set up the layout change listener
+            val layoutChangeListener = object : View.OnLayoutChangeListener {
+                override fun onLayoutChange(
+                    v: View?,
+                    left: Int,
+                    top: Int,
+                    right: Int,
+                    bottom: Int,
+                    oldLeft: Int,
+                    oldTop: Int,
+                    oldRight: Int,
+                    oldBottom: Int
+                ) {
+                    // Run the animator
+                    animator.start()
+                    // Remove the listener after the animation is finished
+                    removeOnLayoutChangeListener(this)
+                }
+            }
+
+
             binding.switcher.setOnCheckedChangeListener { _, isChecked ->
                 binding.rvTasks.layoutManager = if (isChecked) {
                     StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 } else {
-                    LinearLayoutManager(
-                        requireContext(),
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
+                addOnLayoutChangeListener(layoutChangeListener)
             }
+
+
             adapter = tasksAdapter
 
         }
