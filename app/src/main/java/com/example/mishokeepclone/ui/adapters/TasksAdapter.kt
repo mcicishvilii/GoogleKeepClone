@@ -33,8 +33,6 @@ class TasksAdapter  :
     inner class TasksViewHolder(private val binding: SingletasklayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private var model: TaskEntity? = null
-
-
         fun bindData() {
             model = getItem(adapterPosition)
             binding.apply {

@@ -35,9 +35,20 @@ class DashboardFragment :
     private val tasksAdapter: TasksAdapter by lazy { TasksAdapter() }
     private val vm: DashboardViewModel by viewModels()
 
-
-
     override fun viewCreated() {
+
+
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                filterLandmarks(newText)
+                return true
+            }
+        })
 
         setupInitialRecycler()
 
@@ -52,6 +63,7 @@ class DashboardFragment :
         delete()
         toAdd()
         filterByCategories()
+
     }
 
 
@@ -105,6 +117,18 @@ class DashboardFragment :
                 vm.getSearched(query).collect() {
                     tasksAdapter.submitList(it)
                     checkIfListEmpty(it)
+                }
+            }
+        }
+    }
+
+    private fun filterLandmarks(query: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.getAll().collect() { tasks ->
+                    val filteredTasks = tasks.filter {
+                        it.title.contains(query, true)}
+                    tasksAdapter.submitList(filteredTasks)
                 }
             }
         }
