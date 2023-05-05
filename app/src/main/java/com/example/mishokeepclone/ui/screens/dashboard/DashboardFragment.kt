@@ -39,6 +39,8 @@ class DashboardFragment :
 
     override fun viewCreated() {
 
+        setupInitialRecycler()
+
         binding.personal.setBackgroundColor(Color.CYAN)
         binding.work.setBackgroundColor(Color.CYAN)
         binding.clearAll.setBackgroundColor(Color.CYAN)
@@ -120,7 +122,7 @@ class DashboardFragment :
         }
     }
 
-    private fun setupRecycler() {
+    private fun setupInitialRecycler() {
         binding.rvTasks.apply {
             layoutManager =
             LinearLayoutManager(
@@ -128,6 +130,11 @@ class DashboardFragment :
                 LinearLayoutManager.VERTICAL,
                 false
             )
+        }
+    }
+    private fun setupRecycler() {
+        binding.rvTasks.apply {
+
             binding.switcher.setOnCheckedChangeListener { _, isChecked ->
                 binding.rvTasks.layoutManager = if (isChecked) {
                     StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
