@@ -3,6 +3,7 @@ package com.example.mishokeepclone.ui.screens.dashboard
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.GridLayout
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import androidx.core.widget.doOnTextChanged
@@ -11,10 +12,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mishokeepclone.common.BaseFragment
 import com.example.mishokeepclone.data.local.TaskEntity
 import com.example.mishokeepclone.databinding.FragmentDashboardBinding
@@ -119,13 +122,25 @@ class DashboardFragment :
 
     private fun setupRecycler() {
         binding.rvTasks.apply {
-            adapter = tasksAdapter
             layoutManager =
-                LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
+            LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            binding.switcher.setOnCheckedChangeListener { _, isChecked ->
+                binding.rvTasks.layoutManager = if (isChecked) {
+                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                } else {
+                    LinearLayoutManager(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                }
+            }
+            adapter = tasksAdapter
+
         }
     }
 

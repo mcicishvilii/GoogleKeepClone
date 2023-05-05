@@ -17,8 +17,6 @@ import kotlin.collections.ArrayList
 class TasksAdapter  :
     ListAdapter<TaskEntity, TasksAdapter.TasksViewHolder>(NewsDiffCallBack()),Filterable {
 
-    private lateinit var itemClickListener: (TaskEntity, Int) -> Unit
-
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): TasksViewHolder {
@@ -44,10 +42,6 @@ class TasksAdapter  :
                 tvDescription.text = model?.taskDescription
                 binding.priority.text = model?.priority
             }
-            binding.mainlayout.setOnLongClickListener {
-                itemClickListener.invoke(model!!, adapterPosition)
-                true
-            }
 
             binding.mainlayout.setOnClickListener {
                 val action = DashboardFragmentDirections.actionDashboardFragmentToUpdateFragment(model!!)
@@ -56,11 +50,6 @@ class TasksAdapter  :
 
         }
     }
-
-    fun setOnItemClickListener(clickListener: (TaskEntity, Int) -> Unit) {
-        itemClickListener = clickListener
-    }
-
     override fun getFilter(): Filter {
         return customFilter
     }
@@ -90,8 +79,6 @@ class TasksAdapter  :
 
 
 }
-
-
 
 
 class NewsDiffCallBack :
